@@ -325,7 +325,8 @@ main.py that loads it.''')
         if args.private or args.launcher:
             for arch in get_dist_info_for("archs"):
                 libs_dir = f"libs/{arch}"
-                make_tar(join(libs_dir, 'libpybundle.so'), [f'_python_bundle__{arch}'], args.ignore_path,
+                make_tar(
+                    join(libs_dir, 'libpybundle.so'), [f'_python_bundle__{arch}'], args.ignore_path,
                     optimize_python=args.optimize_python)
             make_tar(
                 join(assets_dir, 'private.tar'), private_tar_dirs, args.ignore_path,
