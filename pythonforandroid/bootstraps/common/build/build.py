@@ -312,7 +312,8 @@ main.py that loads it.''')
                 private_tar_dirs.append(main_py_only_dir)
         if get_bootstrap_name() == "webview":
             for asset in listdir('webview_includes'):
-                shutil.copy(join('webview_includes', asset), join(assets_dir, asset))
+                shutil.copy(join('webview_includes', asset),
+                            join(assets_dir, asset))
 
         for asset in args.assets:
             asset_src, asset_dest = asset.split(":")
@@ -320,13 +321,15 @@ main.py that loads it.''')
                 ensure_dir(dirname(join(assets_dir, asset_dest)))
                 shutil.copy(realpath(asset_src), join(assets_dir, asset_dest))
             else:
-                shutil.copytree(realpath(asset_src), join(assets_dir, asset_dest))
+                shutil.copytree(realpath(asset_src),
+                                join(assets_dir, asset_dest))
 
         if args.private or args.launcher:
             for arch in get_dist_info_for("archs"):
                 libs_dir = f"libs/{arch}"
                 make_tar(
-                    join(libs_dir, 'libpybundle.so'), [f'_python_bundle__{arch}'], args.ignore_path,
+                    join(libs_dir, 'libpybundle.so'), [
+                        f'_python_bundle__{arch}'], args.ignore_path,
                     optimize_python=args.optimize_python)
             make_tar(
                 join(assets_dir, 'private.tar'), private_tar_dirs, args.ignore_path,
@@ -499,7 +502,8 @@ main.py that loads it.''')
 
     # Try to build with the newest available build tools
     ignored = {".DS_Store", ".ds_store"}
-    build_tools_versions = [x for x in listdir(join(sdk_dir, 'build-tools')) if x not in ignored]
+    build_tools_versions = [x for x in listdir(
+        join(sdk_dir, 'build-tools')) if x not in ignored]
     build_tools_versions = sorted(build_tools_versions,
                                   key=LooseVersion)
     build_tools_version = build_tools_versions[-1]
@@ -844,7 +848,7 @@ tools directory of the Android SDK.
     ap.add_argument('--extra-manifest-application-arguments', default='',
                     help='Extra arguments to be added to the <manifest><application> tag of'
                          'AndroidManifest.xml')
-    ap.add_argument('--extra-receiver-application-arguments', default='',
+    ap.add_argument('--extra-manifest-receiver-arguments', default='',
                     help='Extra xml to write directly inside the <manifest><application> element of'
                          'AndroidManifest.xml')
     ap.add_argument('--manifest-placeholders', dest='manifest_placeholders',
